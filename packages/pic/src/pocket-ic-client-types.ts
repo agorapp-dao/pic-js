@@ -1,3 +1,13 @@
+export interface CreateInstanceRequest {
+  nns: boolean;
+  sns: boolean;
+  ii: boolean;
+  fiduciary: boolean;
+  bitcoin: boolean;
+  system: number;
+  application: number;
+}
+
 export interface CreateInstanceSuccessResponse {
   Created: {
     instance_id: number;
@@ -14,6 +24,7 @@ export type CreateInstanceResponse =
 
 export interface CanisterCallRequest {
   sender: string;
+  effective_principal: string;
   canister_id: string;
   method: string;
   payload: string;
