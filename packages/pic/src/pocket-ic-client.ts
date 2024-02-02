@@ -16,7 +16,7 @@ import {
   AddCanisterCyclesResponse,
   CanisterCallRequest,
   CanisterCallResponse,
-  CheckCanisterExistsRequest,
+  CheckCanisterExistsRequest, CreateInstanceRequest,
   CreateInstanceResponse,
   GetCanisterCyclesBalanceRequest,
   GetCanisterCyclesBalanceResponse,
@@ -46,8 +46,18 @@ export class PocketIcClient {
   }
 
   private static async createInstance(url: string): Promise<number> {
-    const response = await HttpClient.post<null, CreateInstanceResponse>(
-      `${url}/instances`,
+    const response = await HttpClient.post<CreateInstanceRequest, CreateInstanceResponse>(
+      `${url}/instances`, {
+        body: {
+          nns: false,
+          sns: false,
+          ii: false,
+          fiduciary: false,
+          bitcoin: false,
+          system: 0,
+          application: 1
+        }
+      }
     );
 
     if ('Error' in response) {
@@ -147,7 +157,7 @@ export class PocketIcClient {
       },
     );
 
-    handleFetchError(response);
+    await handleFetchError(response);
   }
 
   public async getStableMemory(canisterId: Principal): Promise<Uint8Array> {
@@ -200,6 +210,7 @@ export class PocketIcClient {
   ): Promise<Uint8Array> {
     let rawCanisterCall: CanisterCallRequest = {
       sender: base64EncodePrincipal(sender),
+      effective_principal: 'None',
       canister_id: base64EncodePrincipal(canisterId),
       method,
       payload: base64Encode(payload),

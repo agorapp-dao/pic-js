@@ -24,7 +24,7 @@ export class HttpClient {
       headers: { ...headers, ...JSON_HEADER },
     });
 
-    handleFetchError(response);
+    await handleFetchError(response);
     return (await response.json()) as R;
   }
 
@@ -41,14 +41,21 @@ export class HttpClient {
       headers: { ...headers, ...JSON_HEADER },
     });
 
-    handleFetchError(response);
+    await handleFetchError(response);
     return (await response.json()) as R;
   }
 }
 
-export function handleFetchError(response: Response): void {
+export async function handleFetchError(response: Response): Promise<void> {
   if (!response.ok) {
     console.error('Error response', response.url, response.statusText);
+
+    try {
+      const body = await response.text();
+      console.error(body);
+    } catch (_) {
+      // do nothing
+    }
 
     throw new Error(`${response.url} ${response.statusText}`);
   }

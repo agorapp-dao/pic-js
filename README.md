@@ -1,35 +1,28 @@
-# Pic JS
+# Azle (patched for AgorApp)
 
-[![NPM](https://badge.fury.io/js/@hadronous%2Fpic.svg)](https://badge.fury.io/js/@hadronous%2Fpic)
-![Dependencies](https://img.shields.io/librariesio/release/npm/%40hadronous/pic)
+This is a patched version of the `pic` project. Aim of these patches it to make it work with AgorApp.
 
-[![Test (NodeJS)](https://github.com/hadronous/pic-js/actions/workflows/test-nodejs.yml/badge.svg)](https://github.com/hadronous/pic-js/actions/workflows/test-nodejs.yml)
-[![Test (Bun)](https://github.com/hadronous/pic-js/actions/workflows/test-bun.yml/badge.svg)](https://github.com/hadronous/pic-js/actions/workflows/test-bun.yml)
-[![Lint](https://github.com/hadronous/pic-js/actions/workflows/lint.yml/badge.svg)](https://github.com/hadronous/pic-js/actions/workflows/lint.yml)
-[![CodeQL](https://github.com/hadronous/pic-js/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/hadronous/pic-js/actions/workflows/github-code-scanning/codeql)
+Changes against original:
 
-Pic JS is a library for interacting with a local instance of `pocket-ic` from TypeScript.
+- Use newer version of `pocket-ic`
+- Get direct access to unserialized values
+-
 
-The `pocket-ic` is a canister testing platform for the [Internet Computer](https://internetcomputer.org/). It is a standalone executable that can be used to test canisters locally, without the need to deploy them to a full replica.
+## Build
 
-Other languages available include [Python](https://github.com/dfinity/pocketic-py/) and [Rust](https://github.com/dfinity/ic/tree/master/packages/pocket-ic).
+```bash
+pnpm build
+```
 
-## API Docs
+## Publish
 
-More detailed documentation is available in the [API docs](https://hadronous.github.io/pic-js/).
+```
+# Create orphan branch
+git checkout --orphan v0.2.1-agorapp.2
 
-## Examples
+# Build dist
+pnpm build
 
-Examples are available in the [examples](./examples/README.md) directory.
-
-## Contributing
-
-### Setup
-
-- Install [bun](https://bun.sh/)
-- Install [commitizen](https://commitizen-tools.github.io/commitizen/)
-- Install [pre-commit](https://pre-commit.com/)
-- Install dependencies:
-  ```bash
-  bun i
-  ```
+# Move packages/pic to root, make sure dist is not in .gitignore
+# commit and push
+```

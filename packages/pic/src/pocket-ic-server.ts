@@ -36,7 +36,7 @@ export class PocketIcServer {
     const readyFilePath = tmpFile(`${picFilePrefix}.ready`);
 
     const serverProcess = spawn(binPath, ['--pid', pid.toString()], {
-      stdio: 'ignore',
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
 
     serverProcess.on('error', error => {
